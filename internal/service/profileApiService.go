@@ -20,14 +20,21 @@ func NewProfileService(rps ProfileApiRepository) *ProfileService {
 
 type ProfileApiRepository interface {
 	CreateProfile(context.Context, *model.User) error
+	Login(context.Context, string, []byte) (uuid.UUID, error)
 }
 
-func (s *ProfileService) Login(context.Context, *model.Auth) (uuid.UUID, error) {
-	return uuid.Nil, nil
+func (s *ProfileService) Login(ctx context.Context, auth *model.Auth) (uuid.UUID, error) {
+	hashedPassword := hashPassword([]byte(auth.Password))
+	id, err := s.rps.Login(ctx, auth.Login, hashedPassword)
+	if err != nil {
+		logrus.WithFields(logrus.Fields{"Login": auth.Login, "hashedPassword": hashedPassword}).Errorf("Login: %v", err)
+		return uuid.Nil, fmt.Errorf("Login: %w", err)
+	}
+	return id, nil
 }
 
 func (s *ProfileService) SignUp(ctx context.Context, user *model.User) error {
-	hashedPassword := hashPassword([]byte(user.Password))
+	hashedPassword := hashPassword(user.Password)
 	user.Password = hashedPassword
 	err := s.rps.CreateProfile(ctx, user)
 	if err != nil {
