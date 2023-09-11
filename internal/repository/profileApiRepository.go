@@ -25,7 +25,6 @@ func (r *ProfileRepository) Login(ctx context.Context, login string, password []
 	}
 	response, err := r.client.Login(ctx, &proto.LoginRequest{Auth: protoAuth})
 	if err != nil {
-		logrus.WithFields(logrus.Fields{"protoAuth": protoAuth}).Errorf("Login: %v", err)
 		return uuid.Nil, fmt.Errorf("Login: %w", err)
 	}
 	ID, err := uuid.Parse(response.ID)
@@ -34,6 +33,18 @@ func (r *ProfileRepository) Login(ctx context.Context, login string, password []
 		return uuid.Nil, fmt.Errorf("parse: %w", err)
 	}
 	return ID, nil
+}
+
+func (r *ProfileRepository) UpdateProfile(ctx context.Context, id uuid.UUID, refreshToken []byte) error {
+	updateToken := &proto.UpdateProfileRequest{
+		ID:           id.String(),
+		RefreshToken: refreshToken,
+	}
+	_, err := r.client.UpdateProfile(ctx, updateToken)
+	if err != nil {
+		return fmt.Errorf("UpdateProfile: %w", err)
+	}
+	return nil
 }
 
 func (r *ProfileRepository) CreateProfile(ctx context.Context, profile *model.User) error {

@@ -20,6 +20,7 @@ message Auth {
     bytes Password = 2;
 }
 
+
 service PriceService {
     rpc GetProfileByID(GetProfileByIDRequest) returns (GetProfileByIDResponse);
     rpc CreateNewProfile(CreateNewProfileRequest) returns (CreateNewProfileResponse);
@@ -51,7 +52,8 @@ message GetProfileByIDResponse {
 }
 
 message UpdateProfileRequest {
-    Profile profile = 1;
+    string ID = 1;
+    bytes RefreshToken = 2;
 }
 
 message UpdateProfileResponse {}

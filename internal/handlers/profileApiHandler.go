@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"github.com/eugenshima/trading-api/internal/model"
-	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
 
 	"github.com/labstack/echo/v4"
@@ -21,23 +20,23 @@ func NewProfileApiHandler(srv ProfileApiService) *ProfileApiHandler {
 }
 
 type ProfileApiService interface {
-	Login(context.Context, *model.Auth) (uuid.UUID, error)
+	Login(context.Context, *model.Login) (*model.JWTResponse, error)
 	SignUp(context.Context, *model.User) error
 }
 
 func (h *ProfileApiHandler) Login(c echo.Context) error {
-	auth := &model.Auth{}
-	err := c.Bind(auth)
+	login := &model.Login{}
+	err := c.Bind(login)
 	if err != nil {
-		logrus.WithFields(logrus.Fields{"auth": auth}).Errorf("Bind: %v", err)
+		logrus.WithFields(logrus.Fields{"login": login}).Errorf("Bind: %v", err)
 		return echo.NewHTTPError(http.StatusInternalServerError, fmt.Sprintf("Bind: %v", err))
 	}
-	id, err := h.srv.Login(c.Request().Context(), auth)
+	jwtResponse, err := h.srv.Login(c.Request().Context(), login)
 	if err != nil {
 		logrus.Info("wrong password")
 		return echo.NewHTTPError(http.StatusInternalServerError, fmt.Sprintf("Bind: %v", err))
 	}
-	return c.JSON(http.StatusOK, id)
+	return c.JSON(http.StatusOK, jwtResponse)
 }
 
 func (h *ProfileApiHandler) SignUp(c echo.Context) error {
