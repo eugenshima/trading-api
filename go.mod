@@ -3,6 +3,7 @@ module github.com/eugenshima/trading-api
 go 1.18
 
 require (
+	github.com/caarlos0/env v3.5.0+incompatible
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/google/uuid v1.3.0
 	github.com/labstack/echo/v4 v4.11.1

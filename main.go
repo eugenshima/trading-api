@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/eugenshima/trading-api/internal/handlers"
+	"github.com/eugenshima/trading-api/internal/middleware"
 	"github.com/eugenshima/trading-api/internal/repository"
 	"github.com/eugenshima/trading-api/internal/service"
 	balanceProto "github.com/eugenshima/trading-api/proto/balance"
@@ -46,6 +47,8 @@ func main() {
 	balanceSrv := service.NewBalanceService(balanceRps, priceServiceRps)
 	balanceHandler := handlers.NewBalanceApiHandler(balanceSrv)
 
+	middlewr := middleware.UserIdentity()
+
 	auth := e.Group("/auth")
 	{
 		auth.POST("/login", handler.Login)   //without jwt logic
@@ -57,9 +60,9 @@ func main() {
 
 	balance := e.Group("/balance")
 	{
-		balance.POST("/deposit", balanceHandler.Deposit)       //with jwt logic
-		balance.POST("/getBalance", balanceHandler.GetBalance) //with jwt logic
-		balance.POST("/withdraw", balanceHandler.Withdraw)     //with jwt logic
+		balance.POST("/deposit", balanceHandler.Deposit, middlewr) //with jwt logic
+		balance.POST("/getBalance", balanceHandler.GetBalance)     //with jwt logic
+		balance.POST("/withdraw", balanceHandler.Withdraw)         //with jwt logic
 
 		//balance.POST("/GetLatest", balanceHandler.GetLatestPrice)
 	}
