@@ -5,16 +5,17 @@ import (
 	"fmt"
 
 	"github.com/eugenshima/trading-api/internal/model"
-	proto "github.com/eugenshima/trading-api/proto"
+
+	proto "github.com/eugenshima/trading-api/proto/profile"
 	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
 )
 
 type ProfileRepository struct {
-	client proto.PriceServiceClient
+	client proto.ProfilesClient
 }
 
-func NewProfileRepository(client proto.PriceServiceClient) *ProfileRepository {
+func NewProfileRepository(client proto.ProfilesClient) *ProfileRepository {
 	return &ProfileRepository{client: client}
 }
 

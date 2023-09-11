@@ -21,7 +21,7 @@ message Auth {
 }
 
 
-service PriceService {
+service Profiles {
     rpc GetProfileByID(GetProfileByIDRequest) returns (GetProfileByIDResponse);
     rpc CreateNewProfile(CreateNewProfileRequest) returns (CreateNewProfileResponse);
     rpc UpdateProfile(UpdateProfileRequest) returns (UpdateProfileResponse);

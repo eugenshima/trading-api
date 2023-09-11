@@ -33,8 +33,8 @@ func (h *ProfileApiHandler) Login(c echo.Context) error {
 	}
 	jwtResponse, err := h.srv.Login(c.Request().Context(), login)
 	if err != nil {
-		logrus.Info("wrong password")
-		return echo.NewHTTPError(http.StatusInternalServerError, fmt.Sprintf("Bind: %v", err))
+		logrus.WithFields(logrus.Fields{"login": login}).Errorf("Login: %v", err)
+		return echo.NewHTTPError(http.StatusInternalServerError, fmt.Sprintf("Login: %v", err))
 	}
 	return c.JSON(http.StatusOK, jwtResponse)
 }
@@ -53,8 +53,11 @@ func (h *ProfileApiHandler) SignUp(c echo.Context) error {
 	}
 	err = h.srv.SignUp(c.Request().Context(), user)
 	if err != nil {
-		logrus.Info("wrong password")
-		return echo.NewHTTPError(http.StatusInternalServerError, fmt.Sprintf("Bind: %v", err))
+		return echo.NewHTTPError(http.StatusInternalServerError, fmt.Sprintf("SignUp: %v", err))
 	}
 	return c.JSON(http.StatusOK, "created")
+}
+
+func (h *ProfileApiHandler) RefreshTokenPair(c echo.Context) error {
+	return c.JSON(http.StatusOK, "refreshed")
 }

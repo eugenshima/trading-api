@@ -77,7 +77,7 @@ func (s *ProfileService) SignUp(ctx context.Context, user *model.User) error {
 	return nil
 }
 
-// GenerateAccessAndRefreshTokens func returns access & refresh tokens
+// generateAccessAndRefreshTokens func returns generated access & refresh tokens
 func generateAccessAndRefreshTokens(key string, id uuid.UUID) (access, refresh string, err error) {
 	accessToken := jwt.NewWithClaims(jwt.SigningMethodHS256, &tokenClaims{
 		StandardClaims: jwt.StandardClaims{

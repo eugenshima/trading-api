@@ -1,0 +1,47 @@
+syntax = "proto3";
+option go_package = "github.com/eugenshima/trading-api";
+
+message Balance {
+    string ProfileID = 1;
+    double Balance = 2;
+}
+
+service BalanceService {
+    rpc UpdateUserBalance(UserUpdateRequest) returns (UserUpdateResponse);
+    rpc GetUserByID(UserGetByIDRequest) returns (UserGetByIDResponse);
+    rpc CreateUserBalance(CreateBalanceRequest) returns (CreateBalanceResponse);
+    rpc DeleteUserBalance(DeleteBalanceRequest) returns (DeleteBalanceResponse);
+    rpc GetAllUserBalances(GetAllBalanceRequest) returns (GetAllBalanceResponse);
+}
+
+message UserUpdateRequest {
+    Balance balance = 1;
+}
+
+message UserUpdateResponse {}
+
+message UserGetByIDRequest {
+    string ProfileID = 1;
+}
+
+message UserGetByIDResponse {
+    Balance balance = 1;
+}
+
+message CreateBalanceRequest {
+    Balance balance = 1;
+}
+
+message CreateBalanceResponse {}
+
+message DeleteBalanceRequest {
+    string ProfileID = 1;
+}
+
+message DeleteBalanceResponse {}
+
+message GetAllBalanceRequest{}
+
+message GetAllBalanceResponse {
+    repeated Balance balances = 1;
+}
