@@ -1,23 +1,27 @@
+// Package repository contains methods to communicate with postgres and gRPC servers
 package repository
 
 import (
 	"context"
 	"fmt"
 
+	priceServiceProto "github.com/eugenshima/price-service/proto"
 	"github.com/eugenshima/trading-api/internal/model"
-	proto "github.com/eugenshima/trading-api/proto/price-service"
 )
 
-type priceServiceRepository struct {
-	client proto.PriceServiceClient
+// priceServiceRepository strucct ....
+type priceServiceRepo struct {
+	client priceServiceProto.PriceServiceClient
 }
 
-func NewPriceServiceRepository(client proto.PriceServiceClient) *priceServiceRepository {
-	return &priceServiceRepository{client: client}
+// NewPriceServiceRepository creates a new priceServiceRepository
+func NewPriceServiceRepository(client priceServiceProto.PriceServiceClient) *priceServiceRepo {
+	return &priceServiceRepo{client: client}
 }
 
-func (r *priceServiceRepository) RecvShares(ctx context.Context, selectedShares []string) (*model.Shares, error) {
-	req := &proto.SubscribeRequest{
+// RecvShares receives a list of selected shares
+func (r *priceServiceRepo) RecvShares(ctx context.Context, selectedShares []string) (*model.Shares, error) {
+	req := &priceServiceProto.SubscribeRequest{
 		ShareName: selectedShares,
 	}
 	stream, err := r.client.Subscribe(ctx, req)

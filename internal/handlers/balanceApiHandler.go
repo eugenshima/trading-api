@@ -1,3 +1,4 @@
+// Package handlers for handling echo requests
 package handlers
 
 import (
@@ -11,29 +12,35 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-type BalanceApiHandler struct {
-	srv BalanceApiService
+// BalanceAPIHandler struct represents a handler for Balance API requests
+type BalanceAPIHandler struct {
+	srv BalanceAPIService
 }
 
-func NewBalanceApiHandler(srv BalanceApiService) *BalanceApiHandler {
-	return &BalanceApiHandler{srv: srv}
+// NewBalanceAPIHandler creates a new BalanceApiHandler
+func NewBalanceAPIHandler(srv BalanceAPIService) *BalanceAPIHandler {
+	return &BalanceAPIHandler{srv: srv}
 }
 
-type BalanceApiService interface {
+// BalanceAPIService represents a service for Balance API requests
+type BalanceAPIService interface {
 	AddSubscriber(context.Context, []string) (*model.Shares, error)
 	GetBalance(context.Context, uuid.UUID) (*model.Balance, error)
 }
 
-func (h *BalanceApiHandler) Deposit(c echo.Context) error {
+// Deposit function for adding some amount of money to a balance
+func (h *BalanceAPIHandler) Deposit(c echo.Context) error {
 	return c.JSON(http.StatusOK, "Deposit")
 }
 
-func (h *BalanceApiHandler) Withdraw(c echo.Context) error {
+// Withdraw function for removing some amount of money from a balance
+func (h *BalanceAPIHandler) Withdraw(c echo.Context) error {
 	return c.JSON(http.StatusOK, "Withdraw")
 }
 
 // GetBalance function return balance of given account
-func (h *BalanceApiHandler) GetBalance(c echo.Context) error {
+// nolint: dupl
+func (h *BalanceAPIHandler) GetBalance(c echo.Context) error {
 	reqBalance := &model.Balance{}
 	err := c.Bind(reqBalance)
 	if err != nil {
@@ -49,16 +56,17 @@ func (h *BalanceApiHandler) GetBalance(c echo.Context) error {
 }
 
 // GetLatestPrice function return latest price for chosen share
-func (h *BalanceApiHandler) GetLatestPrice(c echo.Context) error {
+// nolint: dupl
+func (h *BalanceAPIHandler) GetLatestPrice(c echo.Context) error {
 	streamedShares := &model.StreamedShares{}
 	err := c.Bind(streamedShares)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"streamedShares": streamedShares}).Errorf("Bind: %v", err)
 		return echo.NewHTTPError(http.StatusInternalServerError, fmt.Sprintf("Bind: %v", err))
 	}
-	share, err := h.srv.AddSubscriber(c.Request().Context(), streamedShares.Shares)
+	share, err := h.srv.AddSubscriber(c.Request().Context(), streamedShares.Share)
 	if err != nil {
-		logrus.WithFields(logrus.Fields{"Shares": streamedShares.Shares}).Errorf("AddSubscriber: %v", err)
+		logrus.WithFields(logrus.Fields{"Shares": streamedShares.Share}).Errorf("AddSubscriber: %v", err)
 		return echo.NewHTTPError(http.StatusInternalServerError, fmt.Sprintf("AddSubscriber: %v", err))
 	}
 	return c.JSON(http.StatusOK, share)

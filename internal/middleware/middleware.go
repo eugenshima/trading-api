@@ -1,3 +1,4 @@
+// Package middleware provides middleware functions
 package middleware
 
 import (
@@ -20,7 +21,7 @@ type tokenClaims struct {
 
 // const for middlware
 const (
-	key    = "ew4t137tr1eyfg1ryg4ryerg2743gr2"
+	Key    = "ew4t137tr1eyfg1ryg4ryerg2743gr2"
 	Bearer = "Bearer"
 	Admin  = "admin"
 )
@@ -29,7 +30,7 @@ const (
 func UserIdentity() echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			// Chtcking for auth header
+			// Checking for auth header
 			authHeader := c.Request().Header.Get("Authorization")
 			if authHeader == "" {
 				return echo.NewHTTPError(http.StatusUnauthorized, "Missing authorization header")
@@ -40,7 +41,7 @@ func UserIdentity() echo.MiddlewareFunc {
 				return echo.NewHTTPError(http.StatusUnauthorized, "Invalid authorization header format")
 			}
 			// checking for valid access token
-			token, err := ValidateToken(headerParts[1], key)
+			token, err := ValidateToken(headerParts[1], Key)
 			if err != nil || !token.Valid {
 				return echo.NewHTTPError(http.StatusUnauthorized, "Invalid token")
 			}
@@ -80,20 +81,20 @@ func GetPayloadFromToken(token string) (uuid.UUID, error) {
 	parts := strings.Split(token, ".")
 	payload := parts[1]
 
-	// Декодирование Base64url полезной нагрузки в формат JSON
+	// decoding Base64url payload into JSON
 	payloadBytes, err := base64.RawURLEncoding.DecodeString(payload)
 	if err != nil {
 		return uuid.Nil, fmt.Errorf("DecodeString: %w", err)
 	}
 
-	// Распаковка полезной нагрузки в структуру CustomClaims
+	// unmarshalling payload to CustomClaims structure
 	var claims tokenClaims
 	err = json.Unmarshal(payloadBytes, &claims)
 	if err != nil {
 		return uuid.Nil, fmt.Errorf("Unmarshal(): %w", err)
 	}
 
-	// Получение значения ролей
+	// getting ID from payload
 	id, err := uuid.Parse(claims.Id)
 	if err != nil {
 		return uuid.Nil, fmt.Errorf("Parse(): %w", err)
