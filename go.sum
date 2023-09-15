@@ -1,12 +1,12 @@
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/eugenshima/balance v0.0.0-20230912073624-17bc8b70d62f h1:48vN89qKP9b5R3lGQ42Yax0F1V57s8H7hAlO+m6SXCU=
-github.com/eugenshima/balance v0.0.0-20230912073624-17bc8b70d62f/go.mod h1:dGnjGET1ODISGQvtpv13IS9vTgBVrTd8MVkynWv05GA=
-github.com/eugenshima/price-service v0.0.0-20230908101030-754f55fef5d9 h1:/EPpCnG66PP0iyb4/Exaw1wslt2OQQXFQSRyc5j/X+E=
-github.com/eugenshima/price-service v0.0.0-20230908101030-754f55fef5d9/go.mod h1:DcfZDwRkQnPfQzO3MbCt04W8PWp9lrV3TN6PCJ8vKT8=
-github.com/eugenshima/profile v0.0.0-20230911145627-40b990865586 h1:AwMX2oaCmbSByFdalT3hmnt8agyJkzSvDG+B/m5en+s=
-github.com/eugenshima/profile v0.0.0-20230911145627-40b990865586/go.mod h1:CVd0/eW70piBmJi6TyPb9U7EdlV7U0Xc7asXndTqIZ0=
+github.com/eugenshima/balance v0.0.0-20230912135041-c9b907d1e0b0 h1:po0DIT0bMkc7aYCMLjD5unaE4Ggq1k2YLwRHEjgcXNU=
+github.com/eugenshima/balance v0.0.0-20230912135041-c9b907d1e0b0/go.mod h1:dGnjGET1ODISGQvtpv13IS9vTgBVrTd8MVkynWv05GA=
+github.com/eugenshima/price-service v0.0.0-20230912140934-c9edb71c404e h1:yy8PPerr/Qjezc+n3+1ZVJFz03z4Z8EseVHtt3l0Fbs=
+github.com/eugenshima/price-service v0.0.0-20230912140934-c9edb71c404e/go.mod h1:DcfZDwRkQnPfQzO3MbCt04W8PWp9lrV3TN6PCJ8vKT8=
+github.com/eugenshima/profile v0.0.0-20230914132015-1a84f254f4d6 h1:xVE/ffgf+j6/3ThLir24bst/g4+drU0syAR2FxV4hJM=
+github.com/eugenshima/profile v0.0.0-20230914132015-1a84f254f4d6/go.mod h1:BC8s3wW/JI9W8CFLguB0P8hGMDOjWTvwJz288C6wKRg=
 github.com/golang-jwt/jwt v3.2.2+incompatible h1:IfV12K8xAKAnZqdXVzCZ+TOjboZ2keLg81eXfW3O+oY=
 github.com/golang-jwt/jwt v3.2.2+incompatible/go.mod h1:8pz2t5EyA70fFQQSrl6XZXzqecmYZeUEB8OUGHkxJ+I=
 github.com/golang/protobuf v1.5.0/go.mod h1:FsONVRAS9T7sI+LIUmWTfcYkHO4aIWwzhcaSAoJOfIk=
@@ -29,6 +29,8 @@ github.com/mattn/go-isatty v0.0.19 h1:JITubQf0MOLdlGRuRq+jtsDlekdYPia9ZFsB8h/APP
 github.com/mattn/go-isatty v0.0.19/go.mod h1:W+V8PltTTMOvKvAeJH7IuucS94S2C6jfK/D7dTCTo3Y=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
+github.com/shopspring/decimal v1.3.1 h1:2Usl1nmF/WZucqkFZhnfFYxxxu8LG21F6nPQBE5gKV8=
+github.com/shopspring/decimal v1.3.1/go.mod h1:DKyhrW/HYNuLGql+MJL6WCR6knT2jwCFRcu2hWCYk4o=
 github.com/sirupsen/logrus v1.9.3 h1:dueUQJ1C2q9oE3F7wvmSGAaVtTmUizReu6fjN8uqzbQ=
 github.com/sirupsen/logrus v1.9.3/go.mod h1:naHLuLoDiP4jHNo9R0sCBMtWGeIprob74mVsIT4qYEQ=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=

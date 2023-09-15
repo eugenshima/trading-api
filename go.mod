@@ -3,8 +3,6 @@ module github.com/eugenshima/trading-api
 go 1.18
 
 require (
-	github.com/eugenshima/balance v0.0.0-20230912073624-17bc8b70d62f
-	github.com/eugenshima/price-service v0.0.0-20230908101030-754f55fef5d9
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/google/uuid v1.3.1
 	github.com/labstack/echo/v4 v4.11.1
@@ -14,7 +12,12 @@ require (
 	google.golang.org/protobuf v1.31.0 // indirect
 )
 
-require github.com/eugenshima/profile v0.0.0-20230911145627-40b990865586
+require (
+	github.com/eugenshima/balance v0.0.0-20230912135041-c9b907d1e0b0
+	github.com/eugenshima/price-service v0.0.0-20230912140934-c9edb71c404e
+	github.com/eugenshima/profile v0.0.0-20230914132015-1a84f254f4d6
+	github.com/shopspring/decimal v1.3.1
+)
 
 require (
 	github.com/golang/protobuf v1.5.3 // indirect

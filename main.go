@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	balanceProto "github.com/eugenshima/balance/proto"
-	priceServiceProto "github.com/eugenshima/price-service/proto"
 	profileProto "github.com/eugenshima/profile/proto"
 	"github.com/eugenshima/trading-api/internal/handlers"
 	"github.com/eugenshima/trading-api/internal/middleware"
@@ -60,12 +59,12 @@ func main() {
 	profileSrv := service.NewProfileService(profileRps)
 	handler := handlers.NewProfileAPIHandler(profileSrv)
 
-	priceServiceClient := priceServiceProto.NewPriceServiceClient(priceServiceConn)
-	priceServiceRps := repository.NewPriceServiceRepository(priceServiceClient)
+	// priceServiceClient := priceServiceProto.NewPriceServiceClient(priceServiceConn)
+	// priceServiceRps := repository.NewPriceServiceRepository(priceServiceClient)
 
 	balanceClient := balanceProto.NewBalanceServiceClient(balanceConn)
 	balanceRps := repository.NewBalanceRepository(balanceClient)
-	balanceSrv := service.NewBalanceService(balanceRps, priceServiceRps)
+	balanceSrv := service.NewBalanceService(balanceRps)
 	balanceHandler := handlers.NewBalanceAPIHandler(balanceSrv)
 
 	middlewr := middleware.UserIdentity()
@@ -75,14 +74,15 @@ func main() {
 		auth.POST("/login", handler.Login)
 		auth.POST("/signup", handler.SignUp)
 		auth.POST("/refreshtokenpair", handler.RefreshTokenPair)
-		auth.DELETE("/deleteprofile", handler.DeleteProfile)
+		auth.DELETE("/deleteprofile", handler.DeleteProfile, middlewr)
 	}
 
 	balance := e.Group("/balance")
 	{
-		balance.POST("/deposit", balanceHandler.GetLatestPrice, middlewr)
+		balance.POST("/deposit", balanceHandler.Deposit, middlewr)
 		balance.POST("/getBalance", balanceHandler.GetBalance, middlewr)
 		balance.POST("/withdraw", balanceHandler.Withdraw, middlewr)
+		balance.POST("/createBalance", balanceHandler.CreateBalance, middlewr)
 	}
 	// in progress...
 	/*
